@@ -1,0 +1,42 @@
+package org.dev.threaddemo;
+
+public class OddEvenRunnable implements Runnable {
+
+	public int PRINT_NUMBERS_UPTO = 10;
+	static int number = 1;
+	int remainder;
+	static Object lock = new Object();
+
+	OddEvenRunnable(int remainder) {
+		this.remainder = remainder;
+	}
+
+	@Override
+	public void run() {
+		while (number < PRINT_NUMBERS_UPTO) {
+			synchronized (lock) {
+				while (number % 2 != remainder) {
+					try {
+						lock.wait();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				System.out.println(Thread.currentThread().getName() + " " + number);
+				number++;
+				lock.notifyAll();
+			}
+		}
+	}
+
+	public static void main(String[] args) {
+		OddEvenRunnable oddRunnable = new OddEvenRunnable(1);
+		OddEvenRunnable evenRunnable = new OddEvenRunnable(0);
+
+		Thread oddThread = new Thread(oddRunnable, "Odd");
+		Thread evenThread = new Thread(evenRunnable, "Even");
+
+		oddThread.start();
+		evenThread.start();
+	}
+}
