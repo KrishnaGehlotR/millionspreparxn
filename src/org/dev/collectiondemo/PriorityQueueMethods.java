@@ -5,7 +5,7 @@ import java.util.PriorityQueue;
 
 public class PriorityQueueMethods {
 
-	@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static void main(String[] args) {
 
 		PriorityQueue pq = new PriorityQueue();
