@@ -1,0 +1,2 @@
+Writing thru PrintWriter
+Easy way
